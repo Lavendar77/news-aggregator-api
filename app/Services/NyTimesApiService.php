@@ -14,15 +14,18 @@ use Illuminate\Support\Facades\Http;
 
 class NyTimesApiService implements ArticleSourceContract
 {
-    protected $qualifier = ArticleApiSource::NYTIMES;
+    protected ArticleApiSource $qualifier = ArticleApiSource::NYTIMES;
 
     /**
      * @inheritDoc
      */
     public function getArticles(?int $currentPage = 1, ?int $perPage = 100): ArticleSourcePaginatedDataDto
     {
+        /** @var string $baseUrl */
+        $baseUrl = config('services.nytimes.base_url');
+
         $response = Http::acceptJson()
-            ->get(config('services.nytimes.base_url') . '/svc/news/v3/content/all/all.json', [
+            ->get($baseUrl . '/svc/news/v3/content/all/all.json', [
                 'api-key' => config('services.nytimes.api_key'),
             ]);
 
@@ -31,7 +34,7 @@ class NyTimesApiService implements ArticleSourceContract
             throw new Exception("Failed to fetch articles from {$this->qualifier->value}");
         }
 
-        $data = $response->json();
+        $data = (array) $response->json();
 
         return new ArticleSourcePaginatedDataDto(
             articles: $this->formatArticles($data['results']),
@@ -43,6 +46,9 @@ class NyTimesApiService implements ArticleSourceContract
 
     /**
      * Format the articles from the API response.
+     *
+     * @param array<int, array<string, mixed>> $data
+     * @return \Illuminate\Support\Collection<int, \App\Dtos\ArticleSourceDto>
      */
     private function formatArticles(array $data): Collection
     {

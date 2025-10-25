@@ -8,13 +8,18 @@ use Illuminate\Support\Collection;
 
 class ArticleSourcePaginatedDataDto
 {
-    /** @var \Illuminate\Support\Collection<int, \App\Dtos\ArticleSourceDto> */
-    public Collection $articles;
-
     public bool $hasMorePages;
 
+    /**
+     * Create a new paginated data DTO.
+     *
+     * @param \Illuminate\Support\Collection<int, \App\Dtos\ArticleSourceDto> $articles
+     * @param int|null $total
+     * @param int|null $perPage
+     * @param int|null $currentPage
+     */
     public function __construct(
-        Collection $articles,
+        public Collection $articles,
         public ?int $total = null,
         public ?int $perPage = null,
         public ?int $currentPage = null,

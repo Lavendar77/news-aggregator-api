@@ -14,18 +14,21 @@ use Illuminate\Support\Facades\Http;
 
 class NewsApiService implements ArticleSourceContract
 {
-    public ArticleApiSource $qualifier = ArticleApiSource::NEWSAPI;
+    protected ArticleApiSource $qualifier = ArticleApiSource::NEWSAPI;
 
     /**
      * @inheritDoc
      */
     public function getArticles(?int $currentPage = 1, ?int $perPage = 100): ArticleSourcePaginatedDataDto
     {
+        /** @var string $baseUrl */
+        $baseUrl = config('services.newsapi.base_url');
+
         $response = Http::acceptJson()
             ->withHeaders([
                 'X-Api-Key' => config('services.newsapi.api_key'),
             ])
-            ->get(config('services.newsapi.base_url') . '/v2/everything', [
+            ->get($baseUrl . '/v2/everything', [
                 'q' => 'top-headlines',
                 'pageSize' => $perPage,
                 'page' => $currentPage,
@@ -36,7 +39,7 @@ class NewsApiService implements ArticleSourceContract
             throw new Exception("Failed to fetch articles from {$this->qualifier->value}");
         }
 
-        $data = $response->json();
+        $data = (array) $response->json();
 
         return new ArticleSourcePaginatedDataDto(
             articles: $this->formatArticles($data['articles']),
@@ -48,6 +51,9 @@ class NewsApiService implements ArticleSourceContract
 
     /**
      * Format the articles from the API response.
+     *
+     * @param array<int, array<string, mixed>> $data
+     * @return \Illuminate\Support\Collection<int, \App\Dtos\ArticleSourceDto>
      */
     private function formatArticles(array $data): Collection
     {

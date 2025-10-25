@@ -14,15 +14,18 @@ use Illuminate\Support\Facades\Http;
 
 class GuardianApiService implements ArticleSourceContract
 {
-    protected $qualifier = ArticleApiSource::GUARDIAN;
+    protected ArticleApiSource $qualifier = ArticleApiSource::GUARDIAN;
 
     /**
      * @inheritDoc
      */
     public function getArticles(?int $currentPage = 1, ?int $perPage = 100): ArticleSourcePaginatedDataDto
     {
+        /** @var string $baseUrl */
+        $baseUrl = config('services.guardian.base_url');
+
         $response = Http::acceptJson()
-            ->get(config('services.guardian.base_url') . '/search', [
+            ->get($baseUrl . '/search', [
                 'api-key' => config('services.guardian.api_key'),
                 'format' => 'json',
                 'show-fields' => 'trailText,thumbnail,bodyText,byline',
@@ -35,7 +38,7 @@ class GuardianApiService implements ArticleSourceContract
             throw new Exception("Failed to fetch articles from {$this->qualifier->value}");
         }
 
-        $data = $response->json();
+        $data = (array) $response->json();
 
         return new ArticleSourcePaginatedDataDto(
             articles: $this->formatArticles($data['response']['results']),
@@ -47,6 +50,9 @@ class GuardianApiService implements ArticleSourceContract
 
     /**
      * Format the articles from the API response.
+     *
+     * @param array<int, array<string, mixed>> $data
+     * @return \Illuminate\Support\Collection<int, \App\Dtos\ArticleSourceDto>
      */
     private function formatArticles(array $data): Collection
     {

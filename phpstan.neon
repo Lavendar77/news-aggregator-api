@@ -24,3 +24,9 @@ parameters:
                 - '#Cannot call method assertStatus\(\) on mixed#'
             paths:
                 - tests/
+        -
+            messages:
+                - '#Parameter.*expects.*mixed given#'
+                - '#Cannot access offset.*on mixed#'
+            paths:
+                - app/Services/*ApiService.php

@@ -93,6 +93,11 @@ class ArticleSourceDto
         return $this;
     }
 
+    /**
+     * Get the article as an array.
+     *
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [
