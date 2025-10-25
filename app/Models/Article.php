@@ -4,9 +4,12 @@ namespace App\Models;
 
 use App\Enums\ArticleApiSource;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Article extends Model
 {
+    use Searchable;
+
     protected $fillable = [
         'api_source',
         'news_source',
