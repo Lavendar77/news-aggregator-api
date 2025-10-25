@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('api_source')->comment('The API source of the article: App\Enums\ArticleApiSource');
             $table->string('news_source')->index();
-            $table->string('title')->fulltext();
-            $table->text('description')->fulltext();
-            $table->longText('content')->fulltext();
+            $table->string('title');
+            $table->text('description');
+            $table->longText('content');
             $table->string('url');
             $table->string('image_url')->nullable();
             $table->string('author')->nullable();
@@ -26,6 +26,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique(['title', 'api_source']);
+            $table->fullText(['title', 'description', 'content']);
         });
     }
 
