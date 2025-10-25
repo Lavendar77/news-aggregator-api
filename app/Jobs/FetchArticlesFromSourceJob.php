@@ -40,8 +40,11 @@ class FetchArticlesFromSourceJob implements ShouldQueue
 
             // Handle pagination - spin up the same job for the next page
             if ($result->hasMorePages) {
-                info('Fetching next page: ' . $result->nextPage() . ' from ' . $this->apiSource->value . ' with total pages: ' . $result->totalPages());
-                // dispatch(new self($this->apiSource, $result->nextPage()))->delay(now()->addSeconds(10));
+                info(
+                    'Fetching next page: ' . $result->nextPage() . ' from ' . $this->apiSource->value
+                    . ' with total pages: ' . $result->totalPages()
+                );
+                dispatch(new self($this->apiSource, $result->nextPage()))->delay(now()->addSeconds(10));
             }
         } catch (Exception $e) {
             report($e);
