@@ -12,8 +12,9 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^3.0",
         "laravel/pail": "^1.2.2",
-        "laravel/pint": "^1.24",
+        "laravel/pint": "^1.25",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
@@ -37,9 +38,7 @@
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php artisan key:generate",
-            "@php artisan migrate --force",
-            "npm install",
-            "npm run build"
+            "@php artisan migrate --force"
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
@@ -66,7 +65,17 @@
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
+        "phpstan": [
+            "./vendor/bin/phpstan analyse"
+        ],
+        "pint": [
+            "./vendor/bin/pint"
         ]
+    },
+    "scripts-descriptions": {
+        "phpstan": "Run PHPStan static analysis against your application",
+        "pint": "Run Laravel Pint coding style analysis against your application"
     },
     "extra": {
         "laravel": {
