@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('api_source')->comment('The API source of the article: App\Enums\ArticleApiSource');
             $table->string('news_source')->index();
-            $table->string('title');
-            $table->text('description');
-            $table->longText('content');
+            $table->string('title')->fulltext();
+            $table->text('description')->fulltext();
+            $table->longText('content')->fulltext();
             $table->string('url');
             $table->string('image_url')->nullable();
             $table->string('author')->nullable();
-            $table->string('category')->nullable();
-            $table->timestamp('published_at');
+            $table->string('category')->nullable()->index();
+            $table->timestamp('published_at')->index();
             $table->timestamps();
 
             $table->unique(['title', 'api_source']);
