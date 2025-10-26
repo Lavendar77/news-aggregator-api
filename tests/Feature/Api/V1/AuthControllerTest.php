@@ -13,7 +13,7 @@ uses(DatabaseMigrations::class);
 it('can register a new user', function () {
     postJson('/api/v1/auth/register', [
         'name' => fake()->name(),
-        'email' => fake()->email(),
+        'email' => fake()->unique()->safeEmail(),
         'password' => ($password = fake()->password()),
         'password_confirmation' => $password,
     ])
