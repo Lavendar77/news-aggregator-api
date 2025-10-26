@@ -23,10 +23,20 @@ A News Aggregation API built with Laravel 12 that fetches articles from multiple
 composer install
 
 # Setup environment and database
+touch database/database.sqlite # Create SQLite database file (unless you want to use a different database, in which case you need to update the .env file)
 composer run setup
+
+# Run the development server
+php artisan serve
 
 # Run tests
 composer test
+
+# Run PHPStan static analysis
+composer phpstan
+
+# Run Laravel Pint coding style analysis
+composer pint
 ```
 
 ## API Endpoints
