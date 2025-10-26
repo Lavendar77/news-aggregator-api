@@ -14,7 +14,13 @@ use Illuminate\Support\Facades\Http;
 
 class GuardianApiService implements ArticleSourceContract
 {
-    protected ArticleApiSource $qualifier = ArticleApiSource::GUARDIAN;
+    /**
+     * Get the qualifier for the article source.
+     */
+    public function getQualifier(): ArticleApiSource
+    {
+        return ArticleApiSource::GUARDIAN;
+    }
 
     /**
      * @inheritDoc
@@ -34,8 +40,8 @@ class GuardianApiService implements ArticleSourceContract
             ]);
 
         if ($response->failed()) {
-            context()->add("{$this->qualifier->value}_api_response", $response->body());
-            throw new Exception("Failed to fetch articles from {$this->qualifier->value}");
+            context()->add("{$this->getQualifier()->value}_api_response", $response->body());
+            throw new Exception("Failed to fetch articles from {$this->getQualifier()->value}");
         }
 
         $data = (array) $response->json();
@@ -58,8 +64,8 @@ class GuardianApiService implements ArticleSourceContract
     {
         return collect($data)->map(function ($article) {
             return (new ArticleSourceDto())
-                ->setApiSource($this->qualifier)
-                ->setNewsSource($this->qualifier->defaultNewsSource())
+                ->setApiSource($this->getQualifier())
+                ->setNewsSource($this->getQualifier()->defaultNewsSource())
                 ->setTitle($article['webTitle'])
                 ->setDescription($article['fields']['trailText'])
                 ->setContent($article['fields']['bodyText'] ?? '')

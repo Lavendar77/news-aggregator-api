@@ -14,7 +14,13 @@ use Illuminate\Support\Facades\Http;
 
 class NewsApiService implements ArticleSourceContract
 {
-    protected ArticleApiSource $qualifier = ArticleApiSource::NEWSAPI;
+    /**
+     * Get the qualifier for the article source.
+     */
+    public function getQualifier(): ArticleApiSource
+    {
+        return ArticleApiSource::NEWSAPI;
+    }
 
     /**
      * @inheritDoc
@@ -35,8 +41,8 @@ class NewsApiService implements ArticleSourceContract
             ]);
 
         if ($response->failed()) {
-            context()->add("{$this->qualifier->value}_api_response", $response->body());
-            throw new Exception("Failed to fetch articles from {$this->qualifier->value}");
+            context()->add("{$this->getQualifier()->value}_api_response", $response->body());
+            throw new Exception("Failed to fetch articles from {$this->getQualifier()->value}");
         }
 
         $data = (array) $response->json();
@@ -59,8 +65,8 @@ class NewsApiService implements ArticleSourceContract
     {
         return collect($data)->map(function ($article) {
             return (new ArticleSourceDto())
-                ->setApiSource($this->qualifier)
-                ->setNewsSource($article['source']['name'] ?? $this->qualifier->defaultNewsSource())
+                ->setApiSource($this->getQualifier())
+                ->setNewsSource($article['source']['name'] ?? $this->getQualifier()->defaultNewsSource())
                 ->setTitle($article['title'])
                 ->setDescription($article['description'])
                 ->setContent($article['content'])
