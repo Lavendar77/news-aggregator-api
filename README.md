@@ -24,6 +24,10 @@ composer install
 
 # Setup environment and database
 touch database/database.sqlite # Create SQLite database file (unless you want to use a different database, in which case you need to update the .env file)
+
+# If you have the secret key, you can decrypt the .env.encrypted file which contains the ArticleSource API keys.
+# Example: php artisan decrypt:secret
+
 composer run setup
 
 # Run the development server
