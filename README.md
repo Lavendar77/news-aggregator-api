@@ -59,4 +59,4 @@ Built with ❤️ using Laravel
 
 ### Tests
 
-![1761499303209](image/README/1761499303209.png)
+![1761499303209](docs/image/README/1761499303209.png)
