@@ -39,7 +39,7 @@ class FetchArticlesFromSourceJob implements ShouldQueue
             );
 
             // Handle pagination - spin up the same job for the next page
-            if ($result->hasMorePages) {
+            if ($result->hasMorePages && ((bool) config('app.fetch_articles_from_source_recursively'))) {
                 info(
                     'Fetching next page: ' . $result->nextPage() . ' from ' . $this->apiSource->value
                     . ' with total pages: ' . $result->totalPages()

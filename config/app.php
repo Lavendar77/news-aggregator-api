@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'fetch_articles_from_source_recursively' => env('FETCH_ARTICLES_FROM_SOURCE_RECURSIVELY', false),
+
 ];
