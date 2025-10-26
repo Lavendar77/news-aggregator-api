@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Responses\ApiResponse;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -27,6 +28,10 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->expectsJson()) {
                 if ($e instanceof ValidationException) {
                     return ApiResponse::error($e->status, $e->getMessage(), $e->errors());
+                }
+
+                if ($e instanceof AuthenticationException) {
+                    return ApiResponse::error(401, $e->getMessage());
                 }
             }
         });
