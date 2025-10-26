@@ -74,6 +74,11 @@ class AuthController extends Controller
      */
     public function me(Request $request): JsonResponse
     {
+        /** @var \App\Models\User $user */
+        $user = $request->user();
+
+        $user->load('preference');
+
         return ApiResponse::success(200, 'User retrieved successfully', [
             'user' => $request->user(),
         ]);
