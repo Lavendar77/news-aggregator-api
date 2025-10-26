@@ -26,7 +26,7 @@ composer install
 touch database/database.sqlite # Create SQLite database file (unless you want to use a different database, in which case you need to update the .env file)
 
 # If you have the secret key, you can decrypt the .env.encrypted file which contains the ArticleSource API keys.
-# Example: php artisan decrypt:secret
+# Example: php artisan env:decrypt --key=my-secret-key
 
 composer run setup
 
@@ -41,6 +41,9 @@ composer phpstan
 
 # Run Laravel Pint coding style analysis
 composer pint
+
+# Populate some articles from the sources
+php artisan app:fetch-articles-from-source # You will need to the API keys for this to work.
 ```
 
 ## API Endpoints
