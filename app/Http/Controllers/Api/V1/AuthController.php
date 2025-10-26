@@ -31,7 +31,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth-token')->plainTextToken;
 
         return ApiResponse::success(201, 'User registered successfully', [
-            'user' => $user,
+            'user' => $user->toResource(),
             'token' => $token,
         ]);
     }
@@ -52,7 +52,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth-token')->plainTextToken;
 
         return ApiResponse::success(200, 'Login successful', [
-            'user' => $user,
+            'user' => $user->toResource(),
             'token' => $token,
         ]);
     }
@@ -80,7 +80,7 @@ class AuthController extends Controller
         $user->load('preference');
 
         return ApiResponse::success(200, 'User retrieved successfully', [
-            'user' => $request->user(),
+            'user' => $user->toResource(),
         ]);
     }
 }
