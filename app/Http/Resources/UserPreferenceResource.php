@@ -14,12 +14,15 @@ class UserPreferenceResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        /** @var \App\Models\UserPreference $preference */
+        $preference = $this->resource;
+
         return [
-            'sources' => $this->sources,
-            'categories' => $this->categories,
-            'authors' => $this->authors,
-            'created_at' => $this->created_at?->toIso8601ZuluString(),
-            'updated_at' => $this->updated_at?->toIso8601ZuluString(),
+            'sources' => $preference->sources,
+            'categories' => $preference->categories,
+            'authors' => $preference->authors,
+            'created_at' => $preference->created_at?->toIso8601ZuluString(),
+            'updated_at' => $preference->updated_at?->toIso8601ZuluString(),
         ];
     }
 }

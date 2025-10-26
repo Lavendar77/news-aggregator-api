@@ -10,19 +10,22 @@ class UserResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, mixed>
+     * @return array<int|string, mixed>
      */
     public function toArray(Request $request): array
     {
+        /** @var \App\Models\User $user */
+        $user = $this->resource;
+
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            $this->mergeWhen($this->relationLoaded('preference'), [
-                'preference' => new UserPreferenceResource($this->preference),
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            $this->mergeWhen($user->relationLoaded('preference'), [
+                'preference' => new UserPreferenceResource($user->preference),
             ]),
-            'created_at' => $this->created_at?->toIso8601ZuluString(),
-            'updated_at' => $this->updated_at?->toIso8601ZuluString(),
+            'created_at' => $user->created_at?->toIso8601ZuluString(),
+            'updated_at' => $user->updated_at?->toIso8601ZuluString(),
         ];
     }
 }

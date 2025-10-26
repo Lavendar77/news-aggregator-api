@@ -21,9 +21,9 @@ class UpdateUserPreferenceController extends Controller
         $user = $request->user();
 
         $preferenceData = [
-            'sources' => $request->array('sources', []),
-            'categories' => $request->array('categories', []),
-            'authors' => $request->array('authors', []),
+            'sources' => $request->array('sources'),
+            'categories' => $request->array('categories'),
+            'authors' => $request->array('authors'),
         ];
 
         $preference = $user->preference()->updateOrCreate(
