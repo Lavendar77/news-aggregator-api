@@ -13,8 +13,8 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::prefix('auth')->group(function () {
-        Route::get('/user', [AuthController::class, 'me']);
+    Route::prefix('me')->group(function () {
+        Route::get('/', [AuthController::class, 'me']);
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::put('/preferences', UpdateUserPreferenceController::class);
     });
