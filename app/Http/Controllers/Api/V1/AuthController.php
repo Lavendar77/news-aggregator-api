@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\LoginRequest;
 use App\Http\Requests\Api\V1\RegisterRequest;
+use App\Http\Responses\ApiResponse;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -29,11 +30,10 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth-token')->plainTextToken;
 
-        return response()->json([
-            'message' => 'User registered successfully',
+        return ApiResponse::success(201, 'User registered successfully', [
             'user' => $user,
             'token' => $token,
-        ], 201);
+        ]);
     }
 
     /**
@@ -51,8 +51,7 @@ class AuthController extends Controller
         $user = Auth::user();
         $token = $user->createToken('auth-token')->plainTextToken;
 
-        return response()->json([
-            'message' => 'Login successful',
+        return ApiResponse::success(200, 'Login successful', [
             'user' => $user,
             'token' => $token,
         ]);
@@ -67,9 +66,7 @@ class AuthController extends Controller
         $user = $request->user();
         $user->currentAccessToken()->delete();
 
-        return response()->json([
-            'message' => 'Logged out successfully',
-        ]);
+        return ApiResponse::success(200, 'Logged out successfully');
     }
 
     /**
@@ -77,7 +74,7 @@ class AuthController extends Controller
      */
     public function me(Request $request): JsonResponse
     {
-        return response()->json([
+        return ApiResponse::success(200, 'User retrieved successfully', [
             'user' => $request->user(),
         ]);
     }
