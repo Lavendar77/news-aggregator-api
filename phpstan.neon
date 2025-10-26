@@ -19,12 +19,6 @@ parameters:
     ignoreErrors:
         -
             messages:
-                - '#Call to an undefined method PHPUnit\\Framework\\TestCase::#'
-                - '#Cannot call method assertStatus\(\) on mixed#'
-            paths:
-                - tests/
-        -
-            messages:
                 - '#Parameter.*expects.*mixed given#'
                 - '#Cannot access offset.*on mixed#'
             paths:

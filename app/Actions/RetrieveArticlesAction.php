@@ -14,12 +14,12 @@ class RetrieveArticlesAction
 {
     /**
      * Execute the action.
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator<string, mixed>
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator<int, \App\Models\Article>
      */
     public function execute(Request $request): LengthAwarePaginator
     {
         /** @var \App\Models\User|null $user */
-        $user = $request->user();
+        $user = $request->user('sanctum');
         if (!is_null($user)) {
             $user->load('preference');
         }
