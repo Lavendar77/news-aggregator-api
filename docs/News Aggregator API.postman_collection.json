@@ -1,0 +1,997 @@
+{
+	"info": {
+		"_postman_id": "b1b13d7e-51f1-4c49-b1b4-8fa26784fc06",
+		"name": "News Aggregator API",
+		"description": "This is the API documentation for the [News Aggregator API](https://github.com/Lavendar77/news-aggregator-api) project.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7154640"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Set User Token\", function () {",
+									"    if (pm.response.code === 201) {",
+									"        let jsonData = pm.response.json();",
+									"",
+									"        pm.environment.set(\"userToken\", jsonData.data.token);",
+									"        pm.environment.set(\"userEmail\", jsonData.data.user.email);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{$randomFullName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/auth/register",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{$randomFullName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/auth/register",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "close",
+									"type": "text"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.9",
+									"type": "text"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Oct 2025 12:34:25 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"user\": {\n            \"id\": 9,\n            \"name\": \"Omar Reilly MD\",\n            \"email\": \"Trycia.Nicolas@yahoo.com\",\n            \"created_at\": \"2025-10-26T12:34:25Z\",\n            \"updated_at\": \"2025-10-26T12:34:25Z\"\n        },\n        \"token\": \"15|WCiGsTIzV2eFMn3h2LbQckKvQty2PsQ5SVaCHJTx08d9e7cf\"\n    }\n}"
+						},
+						{
+							"name": "Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{$randomFullName}}\",\n  \"email\": \"dummy-email-text\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/auth/register",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "close",
+									"type": "text"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.9",
+									"type": "text"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Oct 2025 12:34:57 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"The email field must be a valid email address.\",\n    \"data\": {\n        \"email\": [\n            \"The email field must be a valid email address.\"\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Set User Token\", function () {",
+									"    if (pm.response.code === 200) {",
+									"        let jsonData = pm.response.json();",
+									"",
+									"        pm.environment.set(\"userToken\", jsonData.data.token);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"password123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/auth/login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "close",
+									"type": "text"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.9",
+									"type": "text"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Oct 2025 12:35:24 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"user\": {\n            \"id\": 9,\n            \"name\": \"Omar Reilly MD\",\n            \"email\": \"Trycia.Nicolas@yahoo.com\",\n            \"created_at\": \"2025-10-26T12:34:25Z\",\n            \"updated_at\": \"2025-10-26T12:34:25Z\"\n        },\n        \"token\": \"16|qjvhO0LgGWWgdsQQqrxzUqPWaBTk71ngBThjcXhDd8834676\"\n    }\n}"
+						},
+						{
+							"name": "Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{userEmail}}s\",\n  \"password\": \"password123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/auth/login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "close",
+									"type": "text"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.9",
+									"type": "text"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Oct 2025 12:35:42 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"The provided credentials are incorrect.\",\n    \"data\": {\n        \"email\": [\n            \"The provided credentials are incorrect.\"\n        ]\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Me",
+			"item": [
+				{
+					"name": "Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/me",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"me"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/me",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "close",
+									"type": "text"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.9",
+									"type": "text"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Oct 2025 12:36:17 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"User retrieved successfully\",\n    \"data\": {\n        \"user\": {\n            \"id\": 9,\n            \"name\": \"Omar Reilly MD\",\n            \"email\": \"Trycia.Nicolas@yahoo.com\",\n            \"preference\": null,\n            \"created_at\": \"2025-10-26T12:34:25Z\",\n            \"updated_at\": \"2025-10-26T12:34:25Z\"\n        }\n    }\n}"
+						},
+						{
+							"name": "Error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/me",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"me"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "close",
+									"type": "text"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.9",
+									"type": "text"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Oct 2025 12:37:53 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Unauthenticated.\",\n    \"data\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/me/logout",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"me",
+								"logout"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/me/logout",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"me",
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "close",
+									"type": "text"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.9",
+									"type": "text"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Oct 2025 12:38:53 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Logged out successfully\",\n    \"data\": null\n}"
+						},
+						{
+							"name": "Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/me/logout",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"me",
+										"logout"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "close",
+									"type": "text"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.9",
+									"type": "text"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Oct 2025 12:39:08 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Unauthenticated.\",\n    \"data\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Update user preference",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sources\": [\n        \"The Verge\"\n    ],\n    \"categories\": [\n        \"Football\"\n    ],\n    \"authors\": [\n        \"Ade\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/me/preferences",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"me",
+								"preferences"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"sources\": [\n        \"The Verge\"\n    ],\n    \"categories\": [\n        \"Football\"\n    ],\n    \"authors\": [\n        \"Ade\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/me/preferences",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"me",
+										"preferences"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "close",
+									"type": "text"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.9",
+									"type": "text"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Oct 2025 12:39:29 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"User preferences updated successfully\",\n    \"data\": {\n        \"preference\": {\n            \"sources\": [\n                \"The Verge\"\n            ],\n            \"categories\": [\n                \"Football\"\n            ],\n            \"authors\": [\n                \"Ade\"\n            ],\n            \"created_at\": \"2025-10-26T12:39:29Z\",\n            \"updated_at\": \"2025-10-26T12:39:29Z\"\n        }\n    }\n}"
+						},
+						{
+							"name": "Error",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"sources\":\n        \"The Verge\"\n    ,\n    \"categories\": [\n        \"Football\"\n    ],\n    \"authors\": [\n        \"Ade\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/me/preferences",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"me",
+										"preferences"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "JSON",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000",
+									"type": "text"
+								},
+								{
+									"key": "Connection",
+									"value": "close",
+									"type": "text"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.9",
+									"type": "text"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private",
+									"type": "text"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 Oct 2025 12:40:08 GMT",
+									"type": "text"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"The sources field must be an array.\",\n    \"data\": {\n        \"sources\": [\n            \"The sources field must be an array.\"\n        ]\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Get Articles",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"name": "cache-control",
+						"type": "text"
+					},
+					{
+						"key": "Postman-Token",
+						"value": "<calculated when request is sent>",
+						"name": "postman-token",
+						"type": "text"
+					},
+					{
+						"key": "Host",
+						"value": "<calculated when request is sent>",
+						"name": "host",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.39.1",
+						"name": "user-agent",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"name": "accept",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"name": "accept-encoding",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"name": "connection",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{userToken}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/api/v1/articles",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"articles"
+					],
+					"query": [
+						{
+							"key": "source",
+							"value": "forbes",
+							"disabled": true
+						},
+						{
+							"key": "category",
+							"value": "politics",
+							"disabled": true
+						},
+						{
+							"key": "api_source",
+							"value": "nytimes",
+							"disabled": true
+						},
+						{
+							"key": "from_date",
+							"value": "2025-10-25",
+							"disabled": true
+						},
+						{
+							"key": "to_date",
+							"value": "2025-10-26",
+							"disabled": true
+						},
+						{
+							"key": "search",
+							"value": "haaland",
+							"disabled": true
+						}
+					]
+				},
+				"description": "### Query Parameters:\n\n- `source` - Filter by news source\n    \n- `category` - Filter by category\n    \n- `api_source` - Filter by API source\n    \n- `from_date` - Filter articles from date\n    \n- `to_date` - Filter articles to date\n    \n- `search` - Full-text search in title, description, content\n    \n- `per_page` - Items per page (max 100, default 15)"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"exec": [
+					"pm.request.headers.add({ key: 'Accept', value: 'application/json' })"
+				],
+				"type": "text/javascript",
+				"packages": {}
+			}
+		}
+	]
+}
