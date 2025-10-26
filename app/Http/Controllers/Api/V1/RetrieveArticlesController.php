@@ -10,7 +10,7 @@ use App\Models\Article;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class ArticleController extends Controller
+class RetrieveArticlesController extends Controller
 {
     /**
      * Display a listing of articles.
