@@ -26,7 +26,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique(['title', 'api_source']);
-            $table->fullText(['title', 'description', 'content']);
+            // $table->fullText(['title', 'description', 'content']);
         });
     }
 
