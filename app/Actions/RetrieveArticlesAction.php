@@ -7,8 +7,8 @@ namespace App\Actions;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Laravel\Scout\Builder;
 
 class RetrieveArticlesAction
 {
@@ -24,8 +24,7 @@ class RetrieveArticlesAction
             $user->load('preference');
         }
 
-        $query = Article::search($request->string('search', '')->toString())
-            ->orderBy('published_at', 'desc');
+        $query = Article::query()->orderBy('published_at', 'desc');
 
         $this->filterBySource($query, $request, $user);
         $this->filterByCategory($query, $request, $user);
@@ -33,6 +32,7 @@ class RetrieveArticlesAction
         $this->filterByApiSource($query, $request);
         $this->filterByFromDate($query, $request);
         $this->filterByToDate($query, $request);
+        $this->filterBySearch($query, $request);
 
         $perPage = min($request->integer('per_page', 10), 100);
         return $query->paginate($perPage);
@@ -41,7 +41,7 @@ class RetrieveArticlesAction
     /**
      * Filter articles by source.
      *
-     * @param \Laravel\Scout\Builder<\App\Models\Article> $query
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Article> $query
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User|null $user
      */
@@ -57,7 +57,7 @@ class RetrieveArticlesAction
     /**
      * Filter articles by category.
      *
-     * @param \Laravel\Scout\Builder<\App\Models\Article> $query
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Article> $query
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User|null $user
      */
@@ -73,7 +73,7 @@ class RetrieveArticlesAction
     /**
      * Filter articles by author.
      *
-     * @param \Laravel\Scout\Builder<\App\Models\Article> $query
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Article> $query
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User|null $user
      */
@@ -89,7 +89,7 @@ class RetrieveArticlesAction
     /**
      * Filter articles by API source.
      *
-     * @param \Laravel\Scout\Builder<\App\Models\Article> $query
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Article> $query
      * @param \Illuminate\Http\Request $request
      */
     private function filterByApiSource(Builder $query, Request $request): void
@@ -102,7 +102,7 @@ class RetrieveArticlesAction
     /**
      * Filter articles by from date.
      *
-     * @param \Laravel\Scout\Builder<\App\Models\Article> $query
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Article> $query
      * @param \Illuminate\Http\Request $request
      */
     private function filterByFromDate(Builder $query, Request $request): void
@@ -115,13 +115,30 @@ class RetrieveArticlesAction
     /**
      * Filter articles by to date.
      *
-     * @param \Laravel\Scout\Builder<\App\Models\Article> $query
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Article> $query
      * @param \Illuminate\Http\Request $request
      */
     private function filterByToDate(Builder $query, Request $request): void
     {
         if ($request->has('to_date')) {
             $query->where('published_at', '<=', $request->date('to_date'));
+        }
+    }
+
+    /**
+     * Filter articles by to date.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Article> $query
+     * @param \Illuminate\Http\Request $request
+     */
+    private function filterBySearch(Builder $query, Request $request): void
+    {
+        if ($request->has('search')) {
+            $query->where(function (Builder $query) use ($request) {
+                $query->where('title', 'like', '%' . $request->string('search') . '%')
+                    ->orWhere('description', 'like', '%' . $request->string('search') . '%')
+                    ->orWhere('content', 'like', '%' . $request->string('search') . '%');
+            });
         }
     }
 }
