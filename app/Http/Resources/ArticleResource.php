@@ -30,7 +30,7 @@ class ArticleResource extends JsonResource
             'image_url' => $article->image_url,
             'author' => $article->author,
             'category' => $article->category,
-            'published_at' => $article->published_at?->toISOString(),
+            'published_at' => $article->published_at->toISOString(),
             'created_at' => $article->created_at?->toISOString(),
             'updated_at' => $article->updated_at?->toISOString(),
         ];

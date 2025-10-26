@@ -52,6 +52,8 @@ class User extends Authenticatable
 
     /**
      * Get the user preference.
+     *
+     * @return HasOne<covariant UserPreference, covariant User>
      */
     public function preference(): HasOne
     {

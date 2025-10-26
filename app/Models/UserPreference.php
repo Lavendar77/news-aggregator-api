@@ -22,6 +22,8 @@ class UserPreference extends Model
 
     /**
      * Get the user.
+     *
+     * @return BelongsTo<covariant User, covariant UserPreference>
      */
     public function user(): BelongsTo
     {

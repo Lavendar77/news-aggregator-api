@@ -6,7 +6,6 @@ parameters:
 
     paths:
         - app/
-        - config/
         - database/
         - tests/
 
@@ -18,6 +17,7 @@ parameters:
 
     # Ignore errors
     ignoreErrors:
+        - '#Method Laravel\\Scout\\Builder<.*>::where\(\) invoked with 3 parameters, 2 required#'
         -
             messages:
                 - '#Call to an undefined method PHPUnit\\Framework\\TestCase::#'

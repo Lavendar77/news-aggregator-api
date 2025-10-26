@@ -39,6 +39,7 @@ class Article extends Model
     #[SearchUsingPrefix(['category', 'news_source', 'api_source'])]
     public function toSearchableArray(): array
     {
+        /** @var array<string, mixed> */
         return $this->except(['url', 'image_url']);
     }
 }

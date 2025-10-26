@@ -17,7 +17,8 @@ class ArticleController extends Controller
      */
     public function __invoke(Request $request): ResourceCollection
     {
-        $query = Article::search($request->string('search', ''))->orderBy('published_at', 'desc');
+        $query = Article::search($request->string('search', '')->toString())
+            ->orderBy('published_at', 'desc');
 
         if ($request->has('source')) {
             $query->where('news_source', $request->string('source'));
